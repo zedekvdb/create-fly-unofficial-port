@@ -76,7 +76,7 @@ public abstract class MovementBehaviour {
                 if (insert == count) {
                     stack = ItemStack.EMPTY;
                 } else {
-                    stack.setCount(count);
+                    stack.setCount(count - insert);
                 }
             }
         }
@@ -112,3 +112,4 @@ public abstract class MovementBehaviour {
         return false;
     }
 }
+
