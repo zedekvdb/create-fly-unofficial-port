@@ -40,6 +40,11 @@ class EmptySuperByteBuffer extends SuperByteBuffer {
     }
 
     @Override
+    public SuperByteBuffer keepAlive() {
+        return this;
+    }
+
+    @Override
     public boolean isEmpty() {
         return true;
     }
