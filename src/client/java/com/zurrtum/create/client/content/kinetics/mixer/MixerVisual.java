@@ -66,7 +66,7 @@ public class MixerVisual extends SingleAxisRotatingVisual<MechanicalMixerBlockEn
             .setRotationalSpeed(speed * RotatingInstance.SPEED_MULTIPLIER)
             // the client-side animation behaviour is attached on the block entity's first tick; a freshly placed mixer
             // can get its visual before that
-            .setRotationOffset(behaviour == null ? 0 : behaviour.getOffset(speed, pt)).setChanged();
+            .setRotationOffset(MechanicalMixerRenderer.getHeadRotationOffset(behaviour, speed, pt)).setChanged();
     }
 
     private void transformPole(float renderedHeadOffset) {
