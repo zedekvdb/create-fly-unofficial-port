@@ -18,6 +18,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.Container;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.function.Supplier;
 
@@ -176,10 +178,24 @@ public class ArmInteractionPoint {
         if (handler == null) {
             return ItemStack.EMPTY;
         }
-        if (simulate) {
-            return handler.count(stack -> true, amount, Direction.UP);
+        if (slot < 0 || slot >= handler.getContainerSize() || amount <= 0) {
+            return ItemStack.EMPTY;
         }
-        return handler.extract(stack -> true, amount, Direction.UP);
+        ItemStack stack = handler.getItem(slot);
+        if (stack.isEmpty() || handler instanceof WorldlyContainer sided &&
+            (Arrays.stream(sided.getSlotsForFace(Direction.UP)).noneMatch(index -> index == slot) ||
+                !sided.canTakeItemThroughFace(slot, stack, Direction.UP))) {
+            return ItemStack.EMPTY;
+        }
+        int count = Math.min(amount, stack.getCount());
+        if (simulate) {
+            return stack.copyWithCount(count);
+        }
+        ItemStack extracted = handler.removeItem(slot, count);
+        if (!extracted.isEmpty()) {
+            handler.setChanged();
+        }
+        return extracted;
     }
 
     public ItemStack extract(ArmBlockEntity armBlockEntity, int slot, boolean simulate) {
