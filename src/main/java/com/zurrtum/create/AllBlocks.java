@@ -1080,7 +1080,7 @@ public class AllBlocks {
         PlacardBlock::new,
         Properties.ofFullCopy(Blocks.COPPER_BLOCK.weathering().unaffected()).forceSolidOn()
     );
-    public static final ColorCollection<ValveHandleBlock> TOOLBOX = (ColorCollection) ColorCollection.registerBlocks(
+    public static final ColorCollection<ToolboxBlock> TOOLBOX = (ColorCollection) ColorCollection.registerBlocks(
         AllBlockItemIds.TOOLBOX,
         Blocks::register,
         ToolboxBlock::new,
@@ -2702,3 +2702,4 @@ public class AllBlocks {
         CStress.setCapacity(CREATIVE_MOTOR, 16384.0);
     }
 }
+
