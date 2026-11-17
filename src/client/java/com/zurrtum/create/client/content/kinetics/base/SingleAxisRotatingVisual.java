@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.content.kinetics.base;
 
+import com.zurrtum.create.AllBlocks;
 import com.zurrtum.create.client.AllPartialModels;
 import com.zurrtum.create.client.flywheel.api.instance.Instance;
 import com.zurrtum.create.client.flywheel.api.model.Model;
@@ -84,8 +85,13 @@ public class SingleAxisRotatingVisual<T extends KineticBlockEntity> extends Kine
             context,
             blockEntity,
             partialTick,
-            Models.chunkPartial(AllPartialModels.ENCASED_SHAFT)
+            Models.chunkPartial(encasedShaftModel(blockEntity.getBlockState()))
         );
+    }
+
+    // casings hide the middle of the shaft, so they only draw its two ends; a metal girder is open and needs all of it
+    public static PartialModel encasedShaftModel(net.minecraft.world.level.block.state.BlockState state) {
+        return state.is(AllBlocks.METAL_GIRDER_ENCASED_SHAFT) ? AllPartialModels.SHAFT : AllPartialModels.ENCASED_SHAFT;
     }
 
     @Override

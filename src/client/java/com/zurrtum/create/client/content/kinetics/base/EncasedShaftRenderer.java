@@ -1,7 +1,6 @@
 package com.zurrtum.create.client.content.kinetics.base;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.zurrtum.create.client.AllPartialModels;
 import com.zurrtum.create.client.catnip.render.CachedBuffers;
 import com.zurrtum.create.client.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import com.zurrtum.create.content.kinetics.base.KineticBlockEntity;
@@ -37,7 +36,7 @@ public class EncasedShaftRenderer implements BlockEntityRenderer<KineticBlockEnt
         Level level = SmartBlockEntityRenderer.extractBase(be, state, breakProgress);
         Axis axis = getRotationAxisOf(state.blockState);
         state.model = CachedBuffers.partialFacingVertical(
-            AllPartialModels.ENCASED_SHAFT,
+            SingleAxisRotatingVisual.encasedShaftModel(state.blockState),
             state.blockState,
             axis.getPositive()
         ).cardinalLighting(level).light(state.lightCoords).color(getTintColor(be)).extractRenderState();
